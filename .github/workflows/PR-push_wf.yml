@@ -33,10 +33,10 @@ jobs:
         pip install -r requirements.txt
 
     # Крок для запуску проекту
-    - name: Build project
+    - name: Run database setup and start the server
       run: |
-        python db.py -a  
-        python app.py --host 0.0.0.0 --port 5000  
+        nohup python db.py -a &  # Запуск в фоновому режимі
+        nohup python app.py --host 0.0.0.0 --port 5000 &
 
     # Крок для запуску юніт тестів
     - name: Run unit tests
