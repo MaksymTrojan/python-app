@@ -1,9 +1,15 @@
-name: Push Workflow
+name: PR-Push Workflow
 
 on:
   push:
     branches:
-      - main
+      - main   # Тригер на пуш в гілку main після мерджу з develop
+  pull_request:
+    branches:
+      - develop   # Тригер на відкриття або синхронізацію PR для гілки develop
+    types:
+      - opened
+      - synchronize
   workflow_dispatch:  # Дозволяє запускати вручну
 
 jobs:
@@ -19,8 +25,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.8'  
-
+        python-version: '3.8' 
 
     # Крок для встановлення залежностей
     - name: Install dependencies
@@ -33,7 +38,7 @@ jobs:
         python db.py -a  
         python app.py --host 0.0.0.0 --port 5000  
 
-    # Крок для запуску юніт тестів (заглушка, поки немає тестів)
+    # Крок для запуску юніт тестів
     - name: Run unit tests
       run: |
         echo "No tests to run yet"  # Це можна замінити на реальні тести, коли вони будуть готові
