@@ -1,0 +1,39 @@
+name: Push Workflow
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # Дозволяє запускати вручну
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # або self-hosted
+
+    steps:
+    # Крок для клонування репозиторію
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Крок для налаштування Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.8'  
+
+
+    # Крок для встановлення залежностей
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    # Крок для запуску проекту
+    - name: Build project
+      run: |
+        python db.py -a  
+        python app.py --host 0.0.0.0 --port 5000  
+
+    # Крок для запуску юніт тестів (заглушка, поки немає тестів)
+    - name: Run unit tests
+      run: |
+        echo "No tests to run yet"  # Це можна замінити на реальні тести, коли вони будуть готові
